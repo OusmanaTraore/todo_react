@@ -26,16 +26,13 @@ import Menu from './pages/Menu';
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/" component={Menu}/>
-    
-      
-   
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+<IonApp>
+  <IonReactRouter>
+    <IonRouterOutlet>
+      <Route exact path="/" component={Menu}/>
+    </IonRouterOutlet>
+  </IonReactRouter>
+</IonApp>
 );
 
 export default App;
