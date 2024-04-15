@@ -1,7 +1,21 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonPage, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { useCashTracker, Transaction } from '../hooks/useCashTracker';
+import {NumericFormat } from 'react-number-format';
 
 const Tracker: React.FC = () => {
+const { getTransactions, getIconForCategory } = useCashTracker();
+const [ transactions, setTransactions] = useState<Transaction[]>([]);
+
+useEffect(() => {
+    const loadData = async () => {
+        const t_data = await getTransactions();
+        // console.log(' Data ', t_data);
+        setTransactions(t_data);
+    }
+    loadData();
+}, []);
+
 
 return (
     <IonPage>
@@ -13,11 +27,27 @@ return (
                 <IonTitle>Tracker</IonTitle>
             </IonToolbar>
         </IonHeader>
-        <IonContent className="ion-padding">
-            UI goes here...
+        <IonContent >
+            <IonList>
+                {transactions.map((trans) => (
+                    <IonItem key={trans.id}>
+                        <IonIcon slot="start" icon={getIconForCategory(trans.category)}></IonIcon>
+                        <IonLabel>
+                            <h2>{trans.title}</h2>
+                            <p>{new Intl.DateTimeFormat('fr-FR').format(trans.createdAt)}</p>
+                        </IonLabel>
+                       <IonText slot="end">
+                            <NumericFormat value={trans.value} displayType={'text'} prefix={'$'}thousandSeparator= {true}/>
+                       </IonText>
+                    </IonItem>
+                ))}
+            </IonList>
         </IonContent>
     </IonPage>
 );
 };
 
 export default Tracker;
+
+
+

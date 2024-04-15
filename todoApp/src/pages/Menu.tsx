@@ -36,7 +36,7 @@ return (
     <Route exact path="/tracker" component={Tracker}/>
     <Route exact path="/reglages" component={Reglages}/>
     <Route exact path="/">
-        <Redirect to="/reglages" />
+        <Redirect to="/tracker" />
         </Route>
     </IonRouterOutlet>
     </IonSplitPane>
